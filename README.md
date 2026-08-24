@@ -186,5 +186,42 @@ Show-level URLs live in `[params]` in `hugo.toml`:
 
 ## Deployment
 
-Not configured yet - the site is a plain static bundle in `public/` after `hugo --gc
---minify`, so any static host works. Remember to set `baseURL` first.
+`.github/workflows/hugo.yml` builds the site and publishes it to GitHub Pages on every push
+to `main`. One-time setup, in the repository on github.com:
+
+1. **Settings → Pages → Build and deployment → Source: GitHub Actions.**
+   Until this is set, the workflow fails on the "Configure Pages" step.
+2. Push to `main` (or Actions → *Deploy to GitHub Pages* → *Run workflow*).
+3. The finished URL appears on the workflow run and under Settings → Pages.
+
+Without a custom domain the site is served from
+`https://<user>.github.io/tech-leadership-deep-dives-website/`. To use your own domain,
+enter it under Settings → Pages → Custom domain and add the DNS records GitHub shows you
+(`CNAME` to `<user>.github.io` for a subdomain, or the four `A` records for an apex domain).
+Tick *Enforce HTTPS* once the certificate is issued.
+
+The `baseURL` in `hugo.toml` is **not** used by the deploy - the workflow passes the real
+one from the Pages configuration, so both the `github.io` subpath and a custom domain work
+without editing any file. `baseURL` only matters for local builds.
+
+The output is a plain static bundle in `public/`, so any other static host works too; there
+you would need to set `baseURL` yourself.
+
+### Keep internal links subpath-safe
+
+Serving from `…github.io/<repo>/` breaks any link that is written root-absolute. Two rules:
+
+- In templates, pass `relURL` a path **without** a leading slash: `{{ "episodes/" | relURL }}`.
+  With a leading slash Hugo treats the path as already final and does not add the subpath.
+  (`absURL` has the same trap, and drops the subpath entirely.) For the site root use
+  `{{ site.Home.RelPermalink }}`.
+- In content, link to other pages with `relref` rather than a bare path:
+  `[Tech Debt]({{< relref "/episodes/02-tech-debt" >}})`.
+
+To check, build with a subpath and confirm no internal URL is missing the prefix:
+
+```sh
+hugo --gc --minify --baseURL "https://example.github.io/some-repo/"
+grep -rEho '(href|src)="?/[^"[:space:]>]*' public --include='*.html' \
+  | grep -v '/some-repo/' | sort -u        # should print nothing
+```

@@ -26,10 +26,10 @@ books because we liked them.
 ## Season 1
 
 Six episodes, released between February and July 2026: [leadership
-levels](/episodes/01-leadership-levels/), [tech debt](/episodes/02-tech-debt/),
-[organisational design](/episodes/03-organizational-design/),
-[security](/episodes/04-security/), [hiring](/episodes/05-hiring/) and
-[AI](/episodes/06-ai/).
+levels]({{< relref "/episodes/01-leadership-levels" >}}), [tech debt]({{< relref "/episodes/02-tech-debt" >}}),
+[organisational design]({{< relref "/episodes/03-organizational-design" >}}),
+[security]({{< relref "/episodes/04-security" >}}), [hiring]({{< relref "/episodes/05-hiring" >}}) and
+[AI]({{< relref "/episodes/06-ai" >}}).
 
 They stand alone, but they were recorded in that order and do build on each other. Career
 frameworks show up in three of them; the chapter-and-champions pattern appears first in

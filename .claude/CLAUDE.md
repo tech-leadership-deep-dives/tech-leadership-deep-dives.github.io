@@ -95,3 +95,12 @@ plain link. Do not replace this with a bare `<iframe>`.
   not browsable term pages; enabling them generated 60+ unlinked pages.
 - `hugo --gc` does not delete stale output. After changing what gets generated, `rm -rf
   public` before rebuilding.
+- **Leading slashes break subpath deploys.** `relURL "/episodes/"` returns `/episodes/`
+  unchanged - Hugo reads a leading slash as "already final" and skips the baseURL subpath;
+  `absURL "/episodes/"` drops the subpath too. Written without the slash,
+  `relURL "episodes/"` resolves correctly. Site root is `site.Home.RelPermalink`. In
+  content, cross-link with `relref`, never a bare `/episodes/...` path. Menu URLs and
+  `.RelPermalink` are already handled by Hugo.
+- The Pages workflow passes `--baseURL` from the Pages config, so `baseURL` in `hugo.toml`
+  is a local-development placeholder only. Verify link changes against a subpath build,
+  not just the root one - see the check in README's deployment section.

@@ -187,7 +187,7 @@ hire the right people, and train your people to make the same decisions you woul
 
 ### Career frameworks and salary bands as hiring tools
 
-The claim that ties this episode back to [Leadership Levels](/episodes/01-leadership-levels/):
+The claim that ties this episode back to [Leadership Levels]({{< relref "/episodes/01-leadership-levels" >}}):
 a **career framework is a hiring instrument**. When you open a role - "senior full-stack Java
 developer" - the framework should already define what *senior* means, what *full-stack*
 means, and how each differs from adjacent levels. The test offered: if your career framework

@@ -154,7 +154,7 @@ The concrete programme described, from a company one host works with:
   trivially gameable. (Somewhere out there, a company put up a token-usage leaderboard and
   switched it off quickly when people started burning money to top it.)
 - **An AI champion in each team and an AI chapter** across them - the identical pattern to
-  the security chapter from [the Security episode](/episodes/04-security/), for the same
+  the security chapter from [the Security episode]({{< relref "/episodes/04-security" >}}), for the same
   reason: it is a concern that cuts across every team.
 - **At least three presentations** from teams already using it, so that the sceptics see
   peers demonstrating real results rather than a leader insisting.
