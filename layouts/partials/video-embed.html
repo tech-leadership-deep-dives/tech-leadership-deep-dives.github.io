@@ -1,0 +1,14 @@
+{{- /*
+  Privacy-friendly YouTube facade: shows a locally hosted thumbnail and only
+  loads the (nocookie) iframe once the visitor clicks play. Without JavaScript
+  the button is a plain link to the video on YouTube.
+*/ -}}
+{{- $id := .Params.youtube_id -}}
+{{- $thumb := printf "img/episodes/%s.jpg" .File.ContentBaseName | relURL -}}
+<div class="video" data-video-id="{{ $id }}" data-title="{{ .Title }}">
+  <img class="video-thumb" src="{{ $thumb }}" alt="Video thumbnail for {{ .Title }}" width="1280" height="720" loading="lazy">
+  <a class="video-play" href="https://www.youtube.com/watch?v={{ $id }}" rel="noopener">
+    <span class="video-play-icon" aria-hidden="true">&#9654;</span>
+    <span class="video-play-label">Play episode<span class="video-play-note">Loads YouTube on click</span></span>
+  </a>
+</div>

@@ -1,0 +1,44 @@
+{{ define "main" }}
+{{ $episodes := sort .RegularPages "Params.episode" }}
+<div class="wrap">
+  <header class="page-header">
+    <h1>{{ .Title }}</h1>
+    {{ with .Content }}<div class="prose">{{ . }}</div>{{ end }}
+    {{ partial "listen-links.html" (dict "label" "Watch or listen on:" "class" "listen-season") }}
+  </header>
+</div>
+
+<div class="wrap">
+  <ol class="episode-list">
+    {{ range $episodes }}
+      <li class="episode-row">
+        <a class="episode-row-link" href="{{ .RelPermalink }}">
+          <img class="episode-row-thumb" src="{{ printf "img/episodes/%s.jpg" .File.ContentBaseName | relURL }}" alt="" width="1280" height="720" loading="lazy">
+          <div>
+            <p class="card-meta">
+              <span class="pill">S{{ .Params.season }}&nbsp;E{{ .Params.episode }}</span>
+              <span>{{ .Params.duration }}</span>
+              <span>{{ .Date.Format "2 January 2006" }}</span>
+            </p>
+            <h2 class="episode-row-title">{{ .Title }}</h2>
+            <p class="card-summary">{{ .Params.summary }}</p>
+            {{ with .Params.topics }}
+              <ul class="topics topics-sm">{{ range first 5 . }}<li>{{ . }}</li>{{ end }}</ul>
+            {{ end }}
+          </div>
+        </a>
+      </li>
+    {{ end }}
+  </ol>
+</div>
+
+<div class="wrap narrow">
+  <div class="callout">
+    <h2>That is Season 1</h2>
+    <p>
+      Six episodes, one topic each. A second season may follow in 2027 - subscribe on any of
+      the platforms above to catch it.
+    </p>
+  </div>
+</div>
+{{ end }}

@@ -1,0 +1,30 @@
+{{- /*
+  Listen/subscribe row.
+
+  Call with a dict:
+    page   - the page to take episode-level links from (optional)
+    label  - leading text (optional)
+    class  - extra class on the wrapper (optional)
+
+  When the page has apple_url / spotify_url set, those episode links win over the
+  show-level links from hugo.toml.
+*/ -}}
+{{- $page := .page -}}
+{{- $site := site -}}
+{{- $apple := $site.Params.applePodcasts -}}
+{{- $spotify := $site.Params.spotify -}}
+{{- $youtube := $site.Params.youtube -}}
+{{- with $page -}}
+  {{- with .Params.apple_url }}{{ $apple = . }}{{ end -}}
+  {{- with .Params.spotify_url }}{{ $spotify = . }}{{ end -}}
+  {{- with .Params.youtube_id }}{{ $youtube = printf "https://www.youtube.com/watch?v=%s" . }}{{ end -}}
+{{- end -}}
+<div class="listen {{ .class }}">
+  {{ with .label }}<span class="listen-label">{{ . }}</span>{{ end }}
+  <ul class="listen-links">
+    <li><a href="{{ $youtube }}" rel="noopener">YouTube</a></li>
+    {{ with $apple }}<li><a href="{{ . }}" rel="noopener">Apple Podcasts</a></li>{{ end }}
+    {{ with $spotify }}<li><a href="{{ . }}" rel="noopener">Spotify</a></li>{{ end }}
+    {{ with $site.Params.podcastRss }}<li><a href="{{ . }}" rel="noopener">RSS</a></li>{{ end }}
+  </ul>
+</div>

@@ -1,0 +1,19 @@
+<footer class="site-footer">
+  <div class="wrap footer-inner">
+    <p class="footer-brand">
+      <strong>Tech Leadership Deep Dives</strong><br>
+      {{ .Site.Params.tagline }}
+    </p>
+    <nav class="footer-links" aria-label="Listen and subscribe">
+      <a href="{{ .Site.Params.youtube }}" rel="noopener">YouTube</a>
+      <a href="{{ .Site.Params.applePodcasts }}" rel="noopener">Apple Podcasts</a>
+      <a href="{{ .Site.Params.spotify }}" rel="noopener">Spotify</a>
+      <a href="{{ .Site.Params.podcastRss }}" rel="noopener">Podcast RSS</a>
+      <a href="{{ "/index.xml" | relURL }}">Site RSS</a>
+    </nav>
+    <p class="footer-meta">
+      A show by Raphael Bauer and Marco Melas.
+      <!-- TODO: add imprint / privacy policy links if the site is hosted in the EU. -->
+    </p>
+  </div>
+</footer>

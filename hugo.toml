@@ -1,0 +1,47 @@
+# Change this to the real domain before deploying.
+baseURL = "https://example.com/"
+locale = "en-us"
+title = "Tech Leadership Deep Dives"
+enableRobotsTXT = true
+enableGitInfo = false
+
+[params]
+  description = "Where tech meets leadership. Marco and Raphael unpack one leadership topic per episode - practical insights for leaders and aspiring leaders alike."
+  tagline = "Where tech meets leadership."
+  youtube = "https://www.youtube.com/@TechLeadershipDeepDives"
+  # Show-level listen links. Episode pages override Apple and Spotify with their
+  # own episode URLs (apple_url / spotify_url in the episode front matter) and
+  # fall back to these.
+  applePodcasts = "https://podcasts.apple.com/us/podcast/tech-leadership-deep-dives/id1885344238"
+  spotify = "https://open.spotify.com/show/3p7y1N7dTMhsI2GLBwOUXK"
+  # The podcast feed itself - not the same as this site's /index.xml.
+  podcastRss = "https://anchor.fm/s/10f086064/podcast/rss"
+  # Bumped manually when the CSS/JS changes in a way that must bust caches.
+  version = "1"
+
+[menu]
+  [[menu.main]]
+    name = "Episodes"
+    url = "/episodes/"
+    weight = 10
+  [[menu.main]]
+    name = "About"
+    url = "/about/"
+    weight = 20
+
+[markup]
+  [markup.goldmark.renderer]
+    # Needed for the <details> wrapper around transcripts.
+    unsafe = true
+  [markup.tableOfContents]
+    startLevel = 2
+    endLevel = 3
+  [markup.highlight]
+    noClasses = false
+
+# No taxonomies: topics are shown as plain labels, not browsable term pages.
+[taxonomies]
+
+[services]
+  [services.rss]
+    limit = 20

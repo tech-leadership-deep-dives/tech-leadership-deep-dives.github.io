@@ -1,0 +1,18 @@
+# Hugo build output and caches
+/public/
+/resources/_gen/
+/.hugo_build.lock
+hugo_stats.json
+
+# Transcript working files (see README - keep these out of the repo)
+/transcripts/
+*.vtt
+
+# Local tool permission grants - machine-specific, not project config.
+# .claude/CLAUDE.md is intentionally tracked.
+/.claude/settings.json
+/.claude/settings.local.json
+
+# OS / editor cruft
+.DS_Store
+*.swp

@@ -1,0 +1,14 @@
+{{- with .Params.youtube_id -}}
+<script type="application/ld+json">
+{{ dict
+  "@context" "https://schema.org"
+  "@type" "VideoObject"
+  "name" $.Title
+  "description" $.Params.summary
+  "uploadDate" ($.Date.Format "2006-01-02")
+  "thumbnailUrl" (printf "img/episodes/%s.jpg" $.File.ContentBaseName | absURL)
+  "embedUrl" (printf "https://www.youtube-nocookie.com/embed/%s" .)
+  "url" $.Permalink
+  | jsonify (dict "indent" "  ") | safeJS }}
+</script>
+{{- end -}}

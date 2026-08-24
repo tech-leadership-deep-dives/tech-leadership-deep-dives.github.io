@@ -1,0 +1,15 @@
+<article class="card">
+  <a class="card-link" href="{{ .RelPermalink }}">
+    <img class="card-thumb" src="{{ printf "img/episodes/%s.jpg" .File.ContentBaseName | relURL }}" alt="" width="1280" height="720" loading="lazy">
+    <div class="card-body">
+      <p class="card-meta">
+        <span class="pill">S{{ .Params.season }}&nbsp;E{{ .Params.episode }}</span>
+        <span>{{ .Params.duration }}</span>
+        <span>{{ .Date.Format "Jan 2006" }}</span>
+      </p>
+      <h3 class="card-title">{{ .Title }}</h3>
+      <p class="card-summary">{{ .Params.summary }}</p>
+      <span class="card-more">Read the deep dive &rarr;</span>
+    </div>
+  </a>
+</article>

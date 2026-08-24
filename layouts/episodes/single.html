@@ -1,0 +1,105 @@
+{{ define "main" }}
+{{ $transcript := .Resources.GetMatch "transcript.md" }}
+<article class="episode">
+  <div class="wrap">
+   <div class="episode-intro">
+    <header class="episode-header">
+      <p class="episode-eyebrow">
+        <a href="{{ "/episodes/" | relURL }}">Season {{ .Params.season }}</a>
+        <span aria-hidden="true">&middot;</span>
+        Episode {{ .Params.episode }}
+      </p>
+      <h1>{{ .Title }}</h1>
+      <p class="episode-meta">
+        <time datetime="{{ .Date.Format "2006-01-02" }}">{{ .Date.Format "2 January 2006" }}</time>
+        <span aria-hidden="true">&middot;</span>
+        {{ .Params.duration }}
+      </p>
+    </header>
+
+   </div>
+
+   <div class="episode-video">{{ partial "video-embed.html" . }}</div>
+
+   <div class="episode-intro">
+    {{ partial "listen-links.html" (dict "page" . "label" "Listen to this episode:") }}
+
+    <p class="episode-lede">{{ .Params.summary }}</p>
+
+    {{ with .Params.topics }}
+      <ul class="topics" aria-label="Topics covered">
+        {{ range . }}<li>{{ . }}</li>{{ end }}
+      </ul>
+    {{ end }}
+   </div>
+  </div>
+
+  <div class="wrap episode-layout">
+    <aside class="episode-toc">
+      <nav aria-label="On this page">
+        <h2>On this page</h2>
+        {{ .TableOfContents }}
+        {{ with $transcript }}<p class="toc-extra"><a href="#transcript">Full transcript</a></p>{{ end }}
+      </nav>
+    </aside>
+
+    <div class="prose">
+      {{ .Content }}
+
+      {{ with .Params.references }}
+        <h2 id="references">References mentioned</h2>
+        <ul class="references">
+          {{ range . }}
+            <li>
+              {{ if .url }}
+                <a href="{{ .url }}" rel="noopener">{{ .title }}</a>
+              {{ else }}
+                <span class="ref-title">{{ .title }}</span>
+              {{ end }}
+              {{ with .authors }}<span class="ref-authors">{{ . }}</span>{{ end }}
+              {{ with .note }}<span class="ref-note">{{ . }}</span>{{ end }}
+            </li>
+          {{ end }}
+        </ul>
+      {{ end }}
+
+      {{ with $transcript }}
+        <h2 id="transcript">Full transcript</h2>
+        <p class="transcript-note">
+          Auto-generated from the episode audio and lightly cleaned up. Expect the
+          occasional transcription slip - the video is the source of truth.
+        </p>
+        <details class="transcript">
+          <summary>Show transcript</summary>
+          <div class="transcript-body">{{ .Content }}</div>
+        </details>
+      {{ end }}
+    </div>
+  </div>
+
+  <div class="wrap">
+    {{/* Walk episodes in release order so "previous" always means the earlier episode. */}}
+    {{ $ordered := sort (where .Site.RegularPages "Type" "episodes") "Params.episode" }}
+    {{ $i := 0 }}
+    {{ range $index, $p := $ordered }}{{ if eq $p.RelPermalink $.RelPermalink }}{{ $i = $index }}{{ end }}{{ end }}
+    <nav class="episode-nav" aria-label="Episodes">
+      {{ if ge $i 1 }}
+        {{ with index $ordered (sub $i 1) }}
+          <a class="episode-nav-prev" href="{{ .RelPermalink }}">
+            <span>&larr; Episode {{ .Params.episode }}</span>
+            <strong>{{ .Title }}</strong>
+          </a>
+        {{ end }}
+      {{ end }}
+      {{ if lt (add $i 1) (len $ordered) }}
+        {{ with index $ordered (add $i 1) }}
+          <a class="episode-nav-next" href="{{ .RelPermalink }}">
+            <span>Episode {{ .Params.episode }} &rarr;</span>
+            <strong>{{ .Title }}</strong>
+          </a>
+        {{ end }}
+      {{ end }}
+    </nav>
+  </div>
+</article>
+{{ end }}

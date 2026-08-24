@@ -1,0 +1,55 @@
+{{ define "main" }}
+{{ $episodes := sort (where .Site.RegularPages "Type" "episodes") "Params.episode" }}
+<section class="hero">
+  <div class="wrap">
+    <p class="hero-eyebrow">A show by Raphael Bauer &amp; Marco Melas</p>
+    <h1 class="hero-title">Tech Leadership<br><span>Deep Dives</span></h1>
+    <p class="hero-tagline">{{ .Site.Params.tagline }}</p>
+    <p class="hero-text">
+      One leadership topic per episode, taken apart properly - no headlines, no hot takes,
+      just two engineering leaders working through what actually happens when you have to
+      make the call. Practical for leaders and for anyone on the way there.
+    </p>
+    <p class="hero-actions">
+      <a class="btn btn-primary" href="{{ "/episodes/" | relURL }}">Browse Season 1</a>
+      <a class="btn" href="{{ .Site.Params.youtube }}" rel="noopener">Watch on YouTube</a>
+    </p>
+  </div>
+</section>
+
+<section class="section">
+  <div class="wrap">
+    <div class="section-head">
+      <h2>Season 1</h2>
+      <p>{{ len $episodes }} episodes &middot; roughly 5 hours of conversation</p>
+    </div>
+    {{ partial "listen-links.html" (dict "label" "Watch or listen to Season 1 on:" "class" "listen-season") }}
+    <div class="grid">
+      {{ range $episodes }}
+        {{ partial "episode-card.html" . }}
+      {{ end }}
+    </div>
+  </div>
+</section>
+
+<section class="section section-alt">
+  <div class="wrap narrow">
+    <h2>Why we made this</h2>
+    {{ .Content }}
+    <p><a class="link-more" href="{{ "/about/" | relURL }}">More about Raphael and Marco &rarr;</a></p>
+  </div>
+</section>
+
+<section class="section">
+  <div class="wrap narrow">
+    <div class="callout">
+      <h2>Season 2</h2>
+      <p>
+        Season 1 is complete. We are taking a break to collect new material and new
+        arguments - a second season may land in 2027. Subscribe wherever you are already
+        listening to Season 1 and you will hear about it first.
+      </p>
+    </div>
+  </div>
+</section>
+{{ end }}
