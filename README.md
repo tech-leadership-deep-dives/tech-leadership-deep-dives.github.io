@@ -194,22 +194,39 @@ to `main`. One-time setup, in the repository on github.com:
 2. Push to `main` (or Actions → *Deploy to GitHub Pages* → *Run workflow*).
 3. The finished URL appears on the workflow run and under Settings → Pages.
 
-Without a custom domain the site is served from
-`https://<user>.github.io/tech-leadership-deep-dives-website/`. To use your own domain,
-enter it under Settings → Pages → Custom domain and add the DNS records GitHub shows you
-(`CNAME` to `<user>.github.io` for a subdomain, or the four `A` records for an apex domain).
-Tick *Enforce HTTPS* once the certificate is issued.
+### Where the site is served from
+
+The URL is decided entirely by the **repository name**, not by anything in this repo:
+
+| Repository | URL |
+|---|---|
+| `tech-leadership-deep-dives.github.io` | `https://tech-leadership-deep-dives.github.io/` |
+| any other name, e.g. `website` | `https://tech-leadership-deep-dives.github.io/website/` |
+
+Only a repo named exactly `<owner>.github.io` can serve the organisation root; that is why
+this repo carries that name. Renaming it moves the site to a subpath, and the old URL stops
+working.
+
+**After renaming a repo, re-run the workflow** (Actions → *Deploy to GitHub Pages* → *Run
+workflow*). The published files hard-code the base URL they were built with, so until it is
+rebuilt every stylesheet, image and link still points at the old path.
+
+To use your own domain instead, enter it under Settings → Pages → Custom domain and add the
+DNS records GitHub shows you (`CNAME` to `<owner>.github.io` for a subdomain, or the four
+`A` records for an apex domain). Tick *Enforce HTTPS* once the certificate is issued.
 
 The `baseURL` in `hugo.toml` is **not** used by the deploy - the workflow passes the real
-one from the Pages configuration, so both the `github.io` subpath and a custom domain work
-without editing any file. `baseURL` only matters for local builds.
+one from the Pages configuration, so the org root, a project subpath and a custom domain all
+work without editing any file. `baseURL` only matters for local builds.
 
 The output is a plain static bundle in `public/`, so any other static host works too; there
 you would need to set `baseURL` yourself.
 
 ### Keep internal links subpath-safe
 
-Serving from `…github.io/<repo>/` breaks any link that is written root-absolute. Two rules:
+The site currently serves from the org root, where root-absolute links happen to work. Keep
+the rules below anyway - they are what lets the site be renamed, forked or moved to a
+project subpath without every link silently breaking.
 
 - In templates, pass `relURL` a path **without** a leading slash: `{{ "episodes/" | relURL }}`.
   With a leading slash Hugo treats the path as already final and does not add the subpath.
