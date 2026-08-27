@@ -20,6 +20,40 @@ This file records the conventions and the reasoning behind them.
 - **Employer names** mentioned in passing on air are deliberately left off the site. Host
   bios are `<!-- TODO -->` markers in `content/about/index.md` for the hosts to fill in.
 
+## Legal pages
+
+`content/impressum/index.md` is the German imprint (§ 5 DDG, plus § 18 Abs. 2 MStV because
+the deep dives are editorial content). It is linked from `footer-meta` on every page, which
+is what "leicht erkennbar und unmittelbar erreichbar" means in practice - do not move it
+behind the About page. It is German on purpose; the law does not accept an English-only
+version for a German provider.
+
+Raphael operates the site and is therefore the sole Diensteanbieter; Marco co-hosts, which
+is a content role, not a provider role. Should the show become a joint undertaking, German
+law forms a GbR without anyone signing anything, and both names and addresses would have to
+go in. The address is mandatory and a P.O. box does not satisfy it; § 5 also requires an
+email address *plus* a second fast contact channel, hence the phone number - a contact form
+would need something server-side, which a static site has not got. The VAT ID is there
+because § 5 Abs. 1 Nr. 6 asks for it whenever the provider has one. Nothing else belongs on
+the page - no disclaimer boilerplate, no EU ODR link (that platform shut down in July 2025).
+
+The details are duplicated from raphaelbauer.com/imprint. Keep the two in step.
+
+`content/datenschutz/index.md` is the privacy policy, required under Art. 13 DSGVO since the
+analytics tag went in. It is linked from the footer next to the imprint. Three processings
+are declared and there are no others, because the site has no forms, no logins, no comments
+and no newsletter: the host's access logs, Privatracker, and YouTube once the visitor clicks
+play.
+
+The Privatracker and rights sections mirror raphaelbauer.com/privacy-policy - same service,
+same legal basis. **The hosting section does not**: this site is on GitHub Pages, that one is
+on Hetzner. Do not copy it across. GitHub means a US transfer, so that section carries a
+TODO to re-check the transfer mechanism against GitHub's current DPA.
+
+The YouTube section is only accurate as long as the facade holds. Replacing it with a bare
+iframe would move the embed from consent-on-click to a transfer on page load, and that
+section - plus the consent question generally - would have to be rewritten.
+
 ## Episode front matter contract
 
 Every episode needs all of: `title`, `season`, `episode`, `date`, `youtube_id`, `duration`,
@@ -56,8 +90,8 @@ wraps it in a collapsed `<details>`.
   `@media (prefers-color-scheme: dark)`. Never hard-code a colour in a rule.
 - Mobile first. Only two breakpoints: `40em` and `64em`. The card grid uses
   `repeat(auto-fill, minmax(280px, 1fr))` so it reflows on its own.
-- No web fonts, no CDN, no analytics, no external requests of any kind before the visitor
-  clicks play.
+- No web fonts, no CDN, no third-party requests on page load except the analytics tag
+  below. The video embed still loads nothing until the visitor clicks play.
 
 The landing-page hero is a two-column grid (`.hero-inner`): copy left, the photo of the two
 hosts right, stacking below `64em`. The photo lives at `static/img/hosts/raphael-marco.jpg`
@@ -89,6 +123,24 @@ thumbnail and a link to YouTube; the click handler replaces it with a
 `youtube-nocookie.com` iframe. This keeps YouTube from setting anything on page load - the
 show is German-hosted and this matters. Without JavaScript the play button degrades to a
 plain link. Do not replace this with a bare `<iframe>`.
+
+## Analytics
+
+`layouts/partials/head.html` loads Privatracker (`app.privatracker.com/visit.js`), the only
+third-party request the site makes on page load. The site id lives in
+`params.privatrackerSiteId`; emptying that param switches analytics off everywhere.
+
+Wrapped in `hugo.IsProduction`, so `hugo server` and `-e development` builds stay out of the
+numbers - which also means the tag is invisible when testing locally. Check a production
+build if you need to see it.
+
+It sets no cookies and collects nothing that identifies a person, so it runs without a
+consent banner on Art. 6 Abs. 1 lit. f DSGVO (legitimate interest) - the same basis and the
+same service raphaelbauer.com uses. That reasoning depends on the cookieless claim staying
+true; if Privatracker ever starts storing anything on the device, § 25 TDDDG applies and the
+site needs consent before the script may load.
+
+Adding it made a privacy policy mandatory under Art. 13 DSGVO. See "Legal pages".
 
 ## Gotchas
 
