@@ -18,6 +18,10 @@ enableGitInfo = false
   podcastRss = "https://anchor.fm/s/10f086064/podcast/rss"
   # Bumped manually when the CSS/JS changes in a way that must bust caches.
   version = "1"
+  # Privatracker (cookieless analytics, German-hosted). Loaded on production
+  # builds only - see layouts/partials/head.html. Empty this param to switch
+  # analytics off site-wide.
+  privatrackerSiteId = "29c74ac3-44e5-4901-be73-522667ac242f"
 
 [menu]
   [[menu.main]]

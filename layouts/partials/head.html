@@ -28,3 +28,11 @@
 {{- end }}
 
 {{ if eq .Type "episodes" }}{{ partial "schema-episode.html" . }}{{ end }}
+
+{{/* Privatracker: cookieless, no personal data, so it runs without a consent
+     banner under Art. 6 Abs. 1 lit. f DSGVO. Production only, so local `hugo
+     server` runs stay out of the numbers. This is the only third-party request
+     the site makes on page load - the video embed stays behind its facade. */}}
+{{ if hugo.IsProduction }}{{ with .Site.Params.privatrackerSiteId -}}
+<script defer src="https://app.privatracker.com/visit.js" data-site-id="{{ . }}"></script>
+{{- end }}{{ end }}
