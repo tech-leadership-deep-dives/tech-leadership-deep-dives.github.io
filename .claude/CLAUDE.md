@@ -59,6 +59,13 @@ wraps it in a collapsed `<details>`.
 - No web fonts, no CDN, no analytics, no external requests of any kind before the visitor
   clicks play.
 
+The landing-page hero is a two-column grid (`.hero-inner`): copy left, the photo of the two
+hosts right, stacking below `64em`. The photo lives at `static/img/hosts/raphael-marco.jpg`
+(1600x1000 JPEG, downscaled from the source PNG so the hero stays under ~150 KB) and is
+referenced with `relURL "img/hosts/..."` - no leading slash, see the subpath gotcha below.
+Its alt text names both hosts without saying who sits where; the transcripts give no
+reliable speaker labels and the photo should not be the thing that assigns them.
+
 ## Listen links
 
 `layouts/partials/listen-links.html` is the single source for the platform row - called with

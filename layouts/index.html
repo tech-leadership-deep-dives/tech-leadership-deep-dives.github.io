@@ -1,19 +1,27 @@
 {{ define "main" }}
 {{ $episodes := sort (where .Site.RegularPages "Type" "episodes") "Params.episode" }}
 <section class="hero">
-  <div class="wrap">
-    <p class="hero-eyebrow">A show by Raphael Bauer &amp; Marco Melas</p>
-    <h1 class="hero-title">Tech Leadership<br><span>Deep Dives</span></h1>
-    <p class="hero-tagline">{{ .Site.Params.tagline }}</p>
-    <p class="hero-text">
-      One leadership topic per episode, taken apart properly - no headlines, no hot takes,
-      just two engineering leaders working through what actually happens when you have to
-      make the call. Practical for leaders and for anyone on the way there.
-    </p>
-    <p class="hero-actions">
-      <a class="btn btn-primary" href="{{ "episodes/" | relURL }}">Browse Season 1</a>
-      <a class="btn" href="{{ .Site.Params.youtube }}" rel="noopener">Watch on YouTube</a>
-    </p>
+  <div class="wrap hero-inner">
+    <div class="hero-copy">
+      <p class="hero-eyebrow">A show by Raphael Bauer &amp; Marco Melas</p>
+      <h1 class="hero-title">Tech Leadership<br><span>Deep Dives</span></h1>
+      <p class="hero-tagline">{{ .Site.Params.tagline }}</p>
+      <p class="hero-text">
+        One leadership topic per episode, taken apart properly - no headlines, no hot takes,
+        just two engineering leaders working through what actually happens when you have to
+        make the call. Practical for leaders and for anyone on the way there.
+      </p>
+      <p class="hero-actions">
+        <a class="btn btn-primary" href="{{ "episodes/" | relURL }}">Browse Season 1</a>
+        <a class="btn" href="{{ .Site.Params.youtube }}" rel="noopener">Watch on YouTube</a>
+      </p>
+    </div>
+    <figure class="hero-figure">
+      <img src="{{ "img/hosts/raphael-marco.jpg" | relURL }}"
+           alt="Raphael Bauer and Marco Melas mid-conversation while recording an episode"
+           width="1600" height="1000">
+      <figcaption>Raphael and Marco, mid-recording.</figcaption>
+    </figure>
   </div>
 </section>
 

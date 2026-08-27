@@ -50,7 +50,7 @@ assets/
   css/main.css                  the entire stylesheet
   js/video.js                   click-to-load YouTube facade
 static/img/episodes/NN-slug.jpg episode thumbnails (served locally, see below)
-static/img/hosts/               host photos - add raphael.jpg / marco.jpg here
+static/img/hosts/               host photos - raphael-marco.jpg is the landing-page hero
 scripts/vtt2txt.py              YouTube auto-caption VTT -> readable paragraphs
 ```
 
